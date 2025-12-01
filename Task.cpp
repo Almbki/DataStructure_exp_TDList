@@ -26,7 +26,26 @@ void InsertNode(TList *head, TNode *newNode){
 
 }
 
-TNode *InsertList(TNode *newNode, TNode *tail){
+bool DeleteNode(TList *head, int id){
+    TNode *p = head->first;;
+    while (p != nullptr){
+        if (p->task.id == id){
+            if (p->prior)
+                p->prior->next = p->next;
+            else
+                head->first = p->next;
 
-
+            if (p->next)
+                p->next->prior = p->prior;
+            else
+                head->tail = p->prior;
+        
+            delete p;
+            head->length--;
+            return true;
+        }
+        p = p->next;
+    }
+    return false;
 }
+    

@@ -14,7 +14,7 @@ struct Task_data
 };
 
 
-typedef struct TNode
+struct TNode
 {
     Task_data task;
     TNode *next;
@@ -22,9 +22,9 @@ typedef struct TNode
 
     TNode(const Task_data &t);
 
-}TNode;
+};
 
-typedef struct TList
+struct TList
 {
     int length;      // 链表长度（不计头节点）
     TNode *first;   
