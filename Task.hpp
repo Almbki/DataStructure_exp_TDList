@@ -13,12 +13,6 @@ struct Task_data
     bool finished;
 };
 
-typedef struct TList
-{
-    int length;      // 链表长度（不计头节点）
-    TNode *first;   
-    TNode *tail;     
-};
 
 typedef struct TNode
 {
@@ -30,7 +24,12 @@ typedef struct TNode
 
 }TNode;
 
-
+typedef struct TList
+{
+    int length;      // 链表长度（不计头节点）
+    TNode *first;   
+    TNode *tail;     
+};
 
 /*
 typedef struct TreeNode
