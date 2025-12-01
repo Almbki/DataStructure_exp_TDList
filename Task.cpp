@@ -1,49 +1,29 @@
 #include "Task.hpp"
 
-TNode::TNode(const Task &t){
-    this->data = t;
-    this->next = nullptr;
-}
-
-
+TNode::TNode(const Task_data &t) : task(t), next(nullptr), prior(nullptr) {}
 
 TList createList(){
-    return nullptr;
+    THead blank = {0,nullptr,nullptr};
+    THead head = new THead(blank);
+    head->next = nullptr;
+    head->prior = nullptr;
+    return head;
 }
 
-void InsertList(TList &task, const Task &newNode){
-    TNode *node = new TNode(newNode);
-
-    if (task = nullptr)
-    {
-        task = node;
-        return ;
-    }
-
-    TNode *p = task;
-    while (p->next != nullptr) 
+void InsertNode(TList head, TNode *newNode){
+    TNode *p = head;
+    while (p->next != nullptr)
     {
         p = p->next;
     }
-    p->next = node;
+
+    p->next = newNode;
+    newNode->prior = p;
+    newNode->next = nullptr;
+
 }
 
-bool DeleteList(TList &task, int id){
-    if (task = nullptr) return false;
-    if(task->data.id == id){
-        TNode * tmp = task;
-        task = task->next;
-        delete tmp;
-        return true;
-    }
+TNode *InsertList(TNode *newNode, TNode *tail){
 
-    TNode *p = task;
-    while (p->next != nullptr && p->next->data.id != id)
-        p = p->next;
-    if(p->next == nullptr) return false;
 
-    TNode *tmp = p->next;
-    p->next = tmp->next;
-    delete tmp;
-    return true;   
 }
