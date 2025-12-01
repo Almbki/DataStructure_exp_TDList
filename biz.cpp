@@ -1,5 +1,5 @@
 #include "biz.hpp"
-void sort::sortBy_deadline()
+void sort::sortBy_deadline(Task *&first, Task *&last)
 {
 }
 
