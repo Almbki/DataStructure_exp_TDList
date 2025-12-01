@@ -4,21 +4,32 @@
 
 struct Task
 {
-    int id; // 标识
+    int id;      //标识
     std::string title;
     std::string note;
-    int createTime; // 202512011205
+    int startline;    //202512011230
     int deadline;
-    int priority; // 1-10
+    int priority;   //1-10
     bool finish;
 };
 
-struct TNode
+typedef struct TNode
 {
     Task data;
     TNode *next;
 
     TNode(const Task &t);
-};
+
+}TNode, *TList;
+
+typedef struct TreeNode
+{
+    Task data;
+    TreeNode *lchild;
+    TreeNode *rchild;
+}TreeNode, *TaskTree;
+
+
+
 
 #endif // TASK_H
