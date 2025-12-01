@@ -2,12 +2,12 @@
 #define TASK_H
 #include <string>
 
-struct Task_data
+struct Task
 {
     int id;      //标识
     std::string title;
     std::string note;
-    int startline;
+    int startline;    //202512011230
     int deadline;
     int priority;   //1-10
     bool finished;
@@ -15,13 +15,23 @@ struct Task_data
 
 typedef struct TNode
 {
-    Task_data task;
+    Task data;
     TNode *next;
     TNode *prior;
 
     TNode(const Task_data &t);
 
-};
+    TNode(const Task &t);
+
+}TNode, *TList;
+
+typedef struct TreeNode
+{
+    Task data;
+    TreeNode *lchild;
+    TreeNode *rchild;
+}TreeNode, *TaskTree;
+
 
 struct TList
 {
