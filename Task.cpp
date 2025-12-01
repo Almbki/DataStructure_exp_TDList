@@ -2,24 +2,27 @@
 
 TNode::TNode(const Task_data &t) : task(t), next(nullptr), prior(nullptr) {}
 
-TList createList(){
-    THead blank = {0,nullptr,nullptr};
-    THead head = new THead(blank);
-    head->next = nullptr;
-    head->prior = nullptr;
+TList *createList(){
+    TList *head = new TList;
+    head->length = 0;
+    head->first = nullptr;
+    head->tail = nullptr;
     return head;
 }
 
-void InsertNode(TList head, TNode *newNode){
-    TNode *p = head;
-    while (p->next != nullptr)
-    {
-        p = p->next;
+void InsertNode(TList *head, TNode *newNode){
+    if (head->first == nullptr){
+        head->first = newNode;
+        head->tail = newNode;
+        head->length = 1;
+        return;
     }
 
+    TNode *p = head->tail;
     p->next = newNode;
     newNode->prior = p;
-    newNode->next = nullptr;
+    head->tail = newNode;
+    head->length++;
 
 }
 
