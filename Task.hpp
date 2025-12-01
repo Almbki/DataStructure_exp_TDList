@@ -2,7 +2,7 @@
 #define TASK_H
 #include <string>
 
-struct task
+struct Task
 {
     int id;      //标识
     std::string title;
@@ -14,12 +14,13 @@ struct task
 
 struct TNode
 {
-    task data;
+    Task data;
     TNode *next;
 
-    TNode(const task &t);
+    TNode(const Task &t);
 };
 
 
 
 #endif // TASK_H
+
