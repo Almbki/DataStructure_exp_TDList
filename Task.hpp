@@ -2,7 +2,7 @@
 #define TASK_H
 #include <string>
 
-struct Task
+struct Task_data
 {
     int id;      //标识
     std::string title;
@@ -13,32 +13,24 @@ struct Task
     bool finished;
 };
 
+typedef struct TList
+{
+    int length;      // 链表长度（不计头节点）
+    TNode *first;   
+    TNode *tail;     
+};
+
 typedef struct TNode
 {
-    Task data;
+    Task_data task;
     TNode *next;
     TNode *prior;
 
     TNode(const Task_data &t);
 
-    TNode(const Task &t);
-
-}TNode, *TList;
-
-typedef struct TreeNode
-{
-    Task data;
-    TreeNode *lchild;
-    TreeNode *rchild;
-}TreeNode, *TaskTree;
+}TNode;
 
 
-struct TList
-{
-    int length;      // 链表长度（不计头节点）
-    TNode *first;    // 第一个任务节点
-    TNode *tail;     // 最后一个任务节点
-};
 
 /*
 typedef struct TreeNode
@@ -49,7 +41,7 @@ typedef struct TreeNode
 }TreeNode, *TaskTree;
 */
 
-TList createList();                              
+TList *createList();                              
 void InsertList(TList head, TNode *newNode);     
 bool DeleteList(TList head, int id);
 
