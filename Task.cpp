@@ -29,16 +29,23 @@ void InsertNode(TList *head, TNode *newNode){
 bool DeleteNode(TList *head, int id){
     TNode *p = head->first;;
     while (p != nullptr){
-        if (p->task.id == id){
+        if (p->task.id == id){      
             if (p->prior)
                 p->prior->next = p->next;
             else
+            {
                 head->first = p->next;
-
+                if (head->first)        //第一个元素的前驱指空
+                    head->first->prior = nullptr;
+            }
             if (p->next)
                 p->next->prior = p->prior;
             else
+            {
                 head->tail = p->prior;
+                if (head->tail)         //最后一个元素的后继指空
+                    head->tail->next = nullptr;
+            }
         
             delete p;
             head->length--;
