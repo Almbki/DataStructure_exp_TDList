@@ -41,8 +41,8 @@ typedef struct TreeNode
 */
 
 TList *createList();                              
-void InsertList(TList head, TNode *newNode);     
-bool DeleteList(TList head, int id);
+void InsertNode(TList *head, TNode *newNode);     
+bool DeleteNode(TList *head, int id);
 
 
 
