@@ -1,10 +1,12 @@
 #include <iostream>
 #include "Task.hpp"
-
+#include "SORT.hpp"
 // 打印链表
-void printList(const TList *list){
+void printList(const TList *list)
+{
     TNode *p = list->first;
-    while (p != nullptr){
+    while (p != nullptr)
+    {
         const Task_data &t = p->task;
 
         std::cout << "id=" << t.id
@@ -20,8 +22,14 @@ void printList(const TList *list){
     }
 }
 
-int main(){
+int main()
+{
     TList *list = createList();
+    Task_Stru ts;
+    // sort s;
+    // ts.sortBy_deadline(list->first);
+
+
 
     Task_data t1 = {1, "Task1", "test1", 111, 222, 5, false};
     Task_data t2 = {2, "Task2", "test2", 333, 444, 3, true};
@@ -34,7 +42,6 @@ int main(){
     InsertNode(list, n1);
     InsertNode(list, n2);
     InsertNode(list, n3);
-
     std::cout << "=== After Insert ===" << std::endl;
     printList(list);
 

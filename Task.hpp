@@ -45,7 +45,9 @@ public:
     virtual bool EditNode(int id);
     virtual void PrintList() const;
     virtual void PrintNode(const TNode_elem *elem_node) const;
-
+    virtual void SearchNode(int id);
+    virtual void SortBy_ddl();
+    virtual void SortBy_priority();
     TNode_head getHead() const { return head; }
 };
 
