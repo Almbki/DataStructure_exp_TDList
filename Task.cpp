@@ -131,7 +131,7 @@ void Task_Stru::PrintList() const {
 TNode_elem* Task_Stru::findNode(int id) {
     TNode_elem* p = head ? head->first : nullptr;
 
-    TNode_elem* p = head->first;
+    // TNode_elem* p = head->first;
 
     while (p != nullptr) {
         if (p->task.id == id) {
