@@ -106,17 +106,3 @@ bool saveData(TList* taskList, const string& filename) {
     return true;
 }
 // 测试用main
-int main() {
-    // 测试loadData
-    TList* allTasks = loadData("tasks.txt");
-    
-    // 简单打印任务数量
-    cout << "总共 " << allTasks->length << " 个任务" << endl;
-    
-    // 测试saveData
-    if (saveData(allTasks, "tasks_backup.txt")) {
-        cout << "保存成功！" << endl;
-    }
-    
-    return 0;
-}
