@@ -1,24 +1,6 @@
 #include <iostream>
 #include "Task.hpp"
 
-// 打印链表
-void printList(const TList *list){
-    TNode *p = list->first;
-    while (p != nullptr){
-        const Task_data &t = p->task;
-
-        std::cout << "id=" << t.id
-                  << ", title=" << t.title
-                  << ", note=" << t.note
-                  << ", start=" << t.startline
-                  << ", deadline=" << t.deadline
-                  << ", priority=" << t.priority
-                  << ", finished=" << t.finished
-                  << std::endl;
-
-        p = p->next;
-    }
-}
 
 int main(){
     TList *list = createList();
