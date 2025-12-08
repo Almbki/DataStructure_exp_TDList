@@ -49,6 +49,7 @@ public:
     virtual bool EditNode(TNode_head head, int id);
     virtual void PrintList(const TNode_head head);
     virtual void PrintNode(const TNode_elem *elem_node);
+    
 };
 
 
