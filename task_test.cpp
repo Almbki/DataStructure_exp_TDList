@@ -29,8 +29,6 @@ int main()
     // sort s;
     // ts.sortBy_deadline(list->first);
 
-
-
     Task_data t1 = {1, "Task1", "test1", 111, 222, 5, false};
     Task_data t2 = {2, "Task2", "test2", 333, 444, 3, true};
     Task_data t3 = {3, "Task3", "test3", 555, 666, 8, false};

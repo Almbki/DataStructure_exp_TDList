@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <limits>
 #include "Task.hpp"
 
 Task_Stru::Task_Stru() {
@@ -88,26 +89,19 @@ bool Task_Stru::DeleteNode(int id) {
 }
 
 void Task_Stru::PrintNode(const TNode_elem* elem_node) const {
-    if (!elem_node) {
-        std::cout << "(空节点)\n";
-        return;
-    }
+    //  ID 标题 优先级 截止时间 状态
 
-    std::cout << "----------------------------------------\n";
-    std::cout << "任务详情\n";
-    std::cout << "----------------------------------------\n";
+    if (!elem_node) return;
 
-    std::cout << std::left << std::setw(12) << "ID:" << elem_node->task.id << "\n";
-    std::cout << std::left << std::setw(12) << "标题:" << elem_node->task.title << "\n";
-    std::cout << std::left << std::setw(12) << "备注:" << elem_node->task.note << "\n";
-    std::cout << std::left << std::setw(12) << "开始时间:" << elem_node->task.startline << "\n";
-    std::cout << std::left << std::setw(12) << "截止时间:" << elem_node->task.deadline << "\n";
-    std::cout << std::left << std::setw(12) << "优先级:" << elem_node->task.priority << "\n";
-    std::cout << std::left << std::setw(12) << "状态:" 
-              << (elem_node->task.finished ? "已完成" : "未完成") << "\n";
-
-    std::cout << "----------------------------------------\n\n";
+    std::cout 
+        << std::left << std::setw(6)  << elem_node->task.id
+        << std::setw(20) << elem_node->task.title
+        << std::setw(10) << elem_node->task.priority
+        << std::setw(15) << elem_node->task.deadline
+        << std::setw(10) << (elem_node->task.finished ? "已完成" : "未完成")
+        << "\n";
 }
+
 
 void Task_Stru::PrintList() const {
     if (!head || head->first == nullptr) {
@@ -115,73 +109,103 @@ void Task_Stru::PrintList() const {
         return;
     }
 
+    std::cout << "--------------------------------------------------------------\n";
+    std::cout 
+        << std::left << std::setw(6)  << "ID"
+        << std::setw(20) << "标题"
+        << std::setw(10) << "优先级"
+        << std::setw(15) << "截止时间"
+        << std::setw(10) << "状态"
+        << "\n";
+    std::cout << "--------------------------------------------------------------\n";
+
     TNode_elem* p = head->first;
     while (p) {
         PrintNode(p);
         p = p->next;
     }
+
+    std::cout << "--------------------------------------------------------------\n";
 }
 
-bool Task_Stru::EditNode(int id) {
-    if (!head) return false;
+TNode_elem* Task_Stru::findNode(int id) {
+    TNode_elem* p = head ? head->first : nullptr;
 
     TNode_elem* p = head->first;
 
     while (p != nullptr) {
         if (p->task.id == id) {
-
-            PrintNode(p);
-
-            int select = -1;
-
-            while (true) {
-                std::cout << "请输入数字选择要修改的项：\n"
-                          << "1. 标题\n"
-                          << "2. 备注\n"
-                          << "3. 开始时间\n"
-                          << "4. 截止时间\n"
-                          << "5. 优先级\n"
-                          << "6. 是否完成\n"
-                          << "0. 退出修改\n";
-
-                std::cin >> select;
-
-                switch (select) {
-                    case 1:
-                        std::cout << "新的标题：";
-                        std::cin >> p->task.title;
-                        break;
-                    case 2:
-                        std::cout << "新的备注：";
-                        std::cin >> p->task.note;
-                        break;
-                    case 3:
-                        std::cout << "新的开始时间：";
-                        std::cin >> p->task.startline;
-                        break;
-                    case 4:
-                        std::cout << "新的截止时间：";
-                        std::cin >> p->task.deadline;
-                        break;
-                    case 5:
-                        std::cout << "新的优先级（1-10）：";
-                        std::cin >> p->task.priority;
-                        break;
-                    case 6:
-                        std::cout << "是否完成（0未完成 / 1已完成）：";
-                        std::cin >> p->task.finished;
-                        break;
-                    case 0:
-                        return true;
-                    default:
-                        std::cout << "无效选择，请重新输入。\n";
-                        break;
-                }
-            }
+            return p;
         }
         p = p->next;
     }
 
     std::cout << "未找到 ID = " << id << " 的任务。\n";
-    return false;
+    return nullptr;
 }
+
+
+bool Task_Stru::EditNode(TNode_elem* p) {
+    if (!p) return false;  
+
+    bool editing = true;
+
+    while (editing) {
+        PrintNode(p);
+
+        std::cout << "请输入数字选择要修改的项：\n"
+                  << "1. 标题\n"
+                  << "2. 备注\n"
+                  << "3. 开始时间\n"
+                  << "4. 截止时间\n"
+                  << "5. 优先级\n"
+                  << "6. 是否完成\n"
+                  << "0. 退出修改\n";
+
+        int select = -1;
+        std::cin >> select;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 清空缓冲区
+
+        switch (select) {
+            case 1:
+                std::cout << "新的标题：";
+                std::getline(std::cin, p->task.title);
+                break;
+            case 2:
+                std::cout << "新的备注：";
+                std::getline(std::cin, p->task.note);
+                break;
+            case 3:
+                std::cout << "新的开始时间：";
+                std::cin >> p->task.startline;
+                break;
+            case 4:
+                std::cout << "新的截止时间：";
+                std::cin >> p->task.deadline;
+                break;
+            case 5:
+                do {
+                    std::cout << "新的优先级（1-10）：";
+                    std::cin >> p->task.priority;
+                } while (p->task.priority < 1 || p->task.priority > 10);
+                break;
+            case 6:
+                do {
+                    std::cout << "是否完成（0未完成 / 1已完成）：";
+                    std::cin >> p->task.finished;
+                } while (p->task.finished != 0 && p->task.finished != 1);
+                break;
+            case 0:
+                editing = false;
+                break;
+            default:
+                std::cout << "无效选择，请重新输入。\n";
+                break;
+        }
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 清理换行符
+    }
+
+    return true;
+}
+

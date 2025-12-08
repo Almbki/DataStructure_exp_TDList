@@ -42,7 +42,8 @@ public:
     virtual TNode_head createList();
     virtual void InsertNode(TNode_elem *newNode);
     virtual bool DeleteNode(int id);
-    virtual bool EditNode(int id);
+    virtual TNode_elem *findNode(int id);
+    virtual bool EditNode(TNode_elem *p);
     virtual void PrintList() const;
     virtual void PrintNode(const TNode_elem *elem_node) const;
     virtual void SearchNode(int id);
