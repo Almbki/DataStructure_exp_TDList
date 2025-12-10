@@ -1,32 +1,45 @@
 #include <iostream>
 #include "Task.hpp"
-#include "SORT.hpp"
 
-int main()
-{
-    TList *list = createList();
-    Task_Stru ts;
-    // sort s;
-    // ts.sortBy_deadline(list->first);
+int main() {
+    Task_Stru taskManager;
 
-    Task_data t1 = {1, "Task1", "test1", 111, 222, 5, false};
-    Task_data t2 = {2, "Task2", "test2", 333, 444, 3, true};
-    Task_data t3 = {3, "Task3", "test3", 555, 666, 8, false};
+    // ===== 插入节点 =====
+    TNode_elem* t1 = new TNode_elem{{1, "买菜", "去超市买菜", 202512081000, 202512081200, 5, false}, nullptr, nullptr};
+    TNode_elem* t2 = new TNode_elem{{2, "写报告", "完成实验报告", 202512081300, 202512081500, 8, false}, nullptr, nullptr};
+    TNode_elem* t3 = new TNode_elem{{3, "健身", "去健身房", 202512081800, 202512082000, 6, false}, nullptr, nullptr};
 
-    TNode *n1 = new TNode(t1);
-    TNode *n2 = new TNode(t2);
-    TNode *n3 = new TNode(t3);
+    taskManager.InsertNode(t1);
+    taskManager.InsertNode(t2);
+    taskManager.InsertNode(t3);
 
-    InsertNode(list, n1);
-    InsertNode(list, n2);
-    InsertNode(list, n3);
-    std::cout << "=== After Insert ===" << std::endl;
-    printList(list);
+    std::cout << "插入后的任务列表：\n";
+    taskManager.PrintList();
 
-    DeleteNode(list, 2);
+    // ===== 查找节点 =====
+    std::cout << "\n查找ID=2的任务：\n";
+    TNode_elem* node = taskManager.findNode(2);
+    if (node) taskManager.PrintNode(node);
 
-    std::cout << "\n=== After Delete id=2 ===" << std::endl;
-    printList(list);
+    // ===== 编辑节点 =====
+    std::cout << "\n编辑ID=2的任务：\n";
+    if (taskManager.EditNode(node)) {
+        std::cout << "编辑完成后的任务：\n";
+        taskManager.PrintNode(node);
+    }
+
+    // ===== 删除节点 =====
+    std::cout << "\n删除ID=1的任务：\n";
+    if (taskManager.DeleteNode(1)) {
+        std::cout << "删除成功，当前任务列表：\n";
+        taskManager.PrintList();
+    }
+
+    // ===== 删除不存在的节点 =====
+    std::cout << "\n尝试删除ID=100的任务：\n";
+    if (!taskManager.DeleteNode(100)) {
+        std::cout << "任务ID=100不存在。\n";
+    }
 
     return 0;
 }

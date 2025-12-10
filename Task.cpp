@@ -95,8 +95,8 @@ void Task_Stru::PrintNode(const TNode_elem* elem_node) const {
 
     std::cout 
         << std::left << std::setw(6)  << elem_node->task.id
-        << std::setw(20) << elem_node->task.title
-        << std::setw(10) << elem_node->task.priority
+        << std::setw(25) << elem_node->task.title
+        << std::setw(7) << elem_node->task.priority
         << std::setw(15) << elem_node->task.deadline
         << std::setw(10) << (elem_node->task.finished ? "已完成" : "未完成")
         << "\n";
@@ -131,7 +131,6 @@ void Task_Stru::PrintList() const {
 TNode_elem* Task_Stru::findNode(int id) {
     TNode_elem* p = head ? head->first : nullptr;
 
-    TNode_elem* p = head->first;
 
     while (p != nullptr) {
         if (p->task.id == id) {
@@ -164,7 +163,8 @@ bool Task_Stru::EditNode(TNode_elem* p) {
 
         int select = -1;
         std::cin >> select;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 清空缓冲区
+        std::cin.ignore();
+        //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 清空缓冲区
 
         switch (select) {
             case 1:
@@ -178,6 +178,7 @@ bool Task_Stru::EditNode(TNode_elem* p) {
             case 3:
                 std::cout << "新的开始时间：";
                 std::cin >> p->task.startline;
+
                 break;
             case 4:
                 std::cout << "新的截止时间：";
@@ -197,7 +198,7 @@ bool Task_Stru::EditNode(TNode_elem* p) {
                 break;
             case 0:
                 editing = false;
-                break;
+                continue;
             default:
                 std::cout << "无效选择，请重新输入。\n";
                 break;
