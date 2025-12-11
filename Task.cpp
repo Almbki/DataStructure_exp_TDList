@@ -93,13 +93,12 @@ void Task_Stru::PrintNode(const TNode_elem* elem_node) const {
 
     if (!elem_node) return;
 
-    std::cout 
-        << std::left << std::setw(6)  << elem_node->task.id
-        << std::setw(25) << elem_node->task.title
-        << std::setw(7) << elem_node->task.priority
-        << std::setw(15) << elem_node->task.deadline
-        << std::setw(10) << (elem_node->task.finished ? "已完成" : "未完成")
-        << "\n";
+    std::cout << std::left << std::setw(6)  << elem_node->task.id << "\t";
+    std::cout << std::setw(25) << elem_node->task.title << "\t";
+    std::cout << std::setw(15) << elem_node->task.priority<< "\t";
+    std::cout << std::setw(15) << elem_node->task.deadline<< "\t";
+    std::cout << std::setw(10) << (elem_node->task.finished ? "已完成" : "未完成") << "\t";
+    std::cout << "\n";
 }
 
 
@@ -109,15 +108,15 @@ void Task_Stru::PrintList() const {
         return;
     }
 
-    std::cout << "--------------------------------------------------------------\n";
+    std::cout << "------------------------------------------------------------------------\n";
     std::cout 
-        << std::left << std::setw(6)  << "ID"
-        << std::setw(20) << "标题"
-        << std::setw(10) << "优先级"
-        << std::setw(15) << "截止时间"
-        << std::setw(10) << "状态"
+        << std::left << std::setw(6)  << "ID" << "\t"
+        << std::setw(25) << "标题" << "\t"
+        << std::setw(15) << "优先级" << "\t"
+        << std::setw(15) << "截止时间" << "\t"
+        << std::setw(10) << "状态" 
         << "\n";
-    std::cout << "--------------------------------------------------------------\n";
+    std::cout << "------------------------------------------------------------------------\n";
 
     TNode_elem* p = head->first;
     while (p) {
@@ -125,7 +124,7 @@ void Task_Stru::PrintList() const {
         p = p->next;
     }
 
-    std::cout << "--------------------------------------------------------------\n";
+    std::cout << "------------------------------------------------------------------------\n";
 }
 
 TNode_elem* Task_Stru::findNode(int id) {
@@ -169,16 +168,17 @@ bool Task_Stru::EditNode(TNode_elem* p) {
         switch (select) {
             case 1:
                 std::cout << "新的标题：";
-                std::getline(std::cin, p->task.title);
+                std::cin >> p->task.title;
+                //std::getline(std::cin, p->task.title);
                 break;
             case 2:
                 std::cout << "新的备注：";
-                std::getline(std::cin, p->task.note);
+                std::cin >> p->task.note;
+                //std::getline(std::cin, p->task.note);
                 break;
             case 3:
                 std::cout << "新的开始时间：";
                 std::cin >> p->task.startline;
-
                 break;
             case 4:
                 std::cout << "新的截止时间：";
