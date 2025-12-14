@@ -1,7 +1,7 @@
 #if !defined(TASK_H)
 #define TASK_H
 #include <string>
-
+typedef void (*Callback)(int);
 struct Task_data // 单个任务结构信息组成
 {
     int id; // 标识
@@ -47,6 +47,8 @@ public:
     virtual void PrintList() const;
     virtual void PrintNode(const TNode_elem *elem_node) const;
     virtual void SearchNode(int id);
+
+    virtual void QuickSort(int array[], int length, Callback fanc);
     virtual void SortBy_ddl();
     virtual void SortBy_priority();
     TNode_head getHead() const { return head; }
