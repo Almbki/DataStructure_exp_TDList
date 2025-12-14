@@ -7,8 +7,8 @@ struct Task_data // 单个任务结构信息组成
     int id; // 标识
     std::string title;
     std::string note;
-    int startline; // 202512011230
-    int deadline;
+    long long startline; // 202512011230
+    long long deadline;
     int priority; // 1-10
     bool finished;
 };
