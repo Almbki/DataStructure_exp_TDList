@@ -35,6 +35,7 @@ private:
     TNode_head head;
 
     TNode_elem *findNode(int id);
+    const TNode_elem* findNode(int id) const; 
     void PrintNode(const TNode_elem *elem_node) const;
 
 public:
@@ -45,6 +46,7 @@ public:
     void InsertNode(const Task_data &task);
     bool DeleteNode(int id);
     bool EditNode(int id);
+    void printNodeById(int id) const;
     void PrintList() const;
     void SearchNode(int id);
     // template <typename fanc>

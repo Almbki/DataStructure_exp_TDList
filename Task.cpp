@@ -130,10 +130,31 @@ void Task_Stru::PrintList() const {
     std::cout << "------------------------------------------------------------------------\n";
 }
 
+void Task_Stru::printNodeById(int id) const {
+    const TNode_elem* p = findNode(id);
+    if (p) {
+        PrintNode(p);
+    }
+}
+
 TNode_elem* Task_Stru::findNode(int id) {
     TNode_elem* p = head ? head->first : nullptr;
 
     //TNode_elem* p = head->first;
+
+    while (p != nullptr) {
+        if (p->task.id == id) {
+            return p;
+        }
+        p = p->next;
+    }
+
+    std::cout << "未找到 ID = " << id << " 的任务。\n";
+    return nullptr;
+}
+
+const TNode_elem* Task_Stru::findNode(int id) const{
+    const TNode_elem* p = head ? head->first : nullptr;
 
     while (p != nullptr) {
         if (p->task.id == id) {
