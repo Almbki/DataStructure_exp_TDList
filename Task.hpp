@@ -39,16 +39,16 @@ public:
     Task_Stru();
     virtual ~Task_Stru();
 
-    virtual TNode_head createList();
-    virtual void InsertNode(TNode_elem *newNode);
-    virtual bool DeleteNode(int id);
-    virtual TNode_elem *findNode(int id);
-    virtual bool EditNode(TNode_elem *p);
-    virtual void PrintList() const;
-    virtual void PrintNode(const TNode_elem *elem_node) const;
-    //virtual void SearchNode(int id);
-    //virtual void SortBy_ddl();
-    //virtual void SortBy_priority();
+    TNode_head createList();
+    void InsertNode(const Task_data &task);
+    bool DeleteNode(int id);
+    TNode_elem *findNode(int id);
+    bool EditNode(TNode_elem *p);
+    void PrintList() const;
+    void PrintNode(const TNode_elem *elem_node) const;
+    //void SearchNode(int id);
+    //void SortBy_ddl();
+    //void SortBy_priority();
     TNode_head getHead() const { return head; }
 };
 
