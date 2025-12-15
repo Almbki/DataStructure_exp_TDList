@@ -1,8 +1,8 @@
 #include "Task.hpp"
 /*指针数组array存排序完的节点指针*/
 
-template <typename fanc>
-void QuickSort(TNode_elem *array[], int length, fanc fanc) // 快速排序并展示
+template <typename fan>
+void QuickSort(TNode_elem *array[], int length, fan fanc) // 快速排序并展示
 {
     if (length < 2)
         return;
@@ -17,13 +17,13 @@ void QuickSort(TNode_elem *array[], int length, fanc fanc) // 快速排序并展
     // }
     // QuickSort(array, left, fanc);
     // QuickSort(array + left + 1, length - 1 - left, fanc);
-    Task_data pivot = array[(left + right) / 2];
+    TNode_elem *pivot = array[(left + right) / 2];
 
     while (left <= right)
     {
-        while (comp(array[left], pivot))
+        while (fanc(array[left], pivot))
             ++left;
-        while (comp(pivot, array[right]))
+        while (fanc(pivot, array[right]))
             --right;
 
         if (left <= right)
@@ -53,7 +53,6 @@ void Task_Stru::SortBy_ddl()
     {
         Task_Stru::PrintNode(i);
     }
-    delete[] array;
 }
 
 void Task_Stru::SortBy_priority()
@@ -72,5 +71,4 @@ void Task_Stru::SortBy_priority()
     {
         Task_Stru::PrintNode(i);
     }
-    delete[] array;
 }
