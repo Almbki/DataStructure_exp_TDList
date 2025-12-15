@@ -31,26 +31,25 @@ using TNode_head = TList *;
 
 class Task_Stru
 {
-
 private:
     TNode_head head;
 
 public:
     Task_Stru();
-    virtual ~Task_Stru();
+    ~Task_Stru();
 
-    virtual TNode_head createList();
-    virtual void InsertNode(TNode_elem *newNode);
-    virtual bool DeleteNode(int id);
-    virtual TNode_elem *findNode(int id);
-    virtual bool EditNode(TNode_elem *p);
-    virtual void PrintList() const;
-    virtual void PrintNode(const TNode_elem *elem_node) const;
-    virtual void SearchNode(int id);
-    template <typename fanc>
-    void QuickSort(int array[], int length, fanc fanc);
-    virtual void SortBy_ddl();
-    virtual void SortBy_priority();
+    TNode_head createList();
+    void InsertNode(TNode_elem *newNode);
+    bool DeleteNode(int id);
+    TNode_elem *findNode(int id);
+    bool EditNode(TNode_elem *p);
+    void PrintList() const;
+    void PrintNode(const TNode_elem *elem_node) const;
+    void SearchNode(int id);
+    // template <typename fanc>
+    // void QuickSort(int array[], int length, fanc fanc);
+    void SortBy_ddl();
+    void SortBy_priority();
     TNode_head getHead() const { return head; }
 };
 
