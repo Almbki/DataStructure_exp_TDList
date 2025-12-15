@@ -1,6 +1,5 @@
 #ifndef READ_H
 #define READ_H
-
 #include "Task.hpp"
 #include <string>
 #include <vector>

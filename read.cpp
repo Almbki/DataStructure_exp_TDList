@@ -1,13 +1,10 @@
 #include "read.h"
-
-// 去除字符串两端的空白字符
 string trim(const string& str) {
     size_t first = str.find_first_not_of(" \t\n\r");
     if (first == string::npos) return "";
     size_t last = str.find_last_not_of(" \t\n\r");
     return str.substr(first, (last - first + 1));
 }
-
 // 分割字符串
 vector<string> split(const string& str, char delimiter) {
     vector<string> tokens;
@@ -140,7 +137,7 @@ Task_data createTask(const string& title, const string& note,
         }
     }
     newTask.deadline = deadline;
-    
+
     //确保优先级在1-10之间
     if (priority < 1) priority = 1;
     if (priority > 10) priority = 10;
@@ -248,7 +245,6 @@ bool saveDataToFile(Task_Stru& taskManager, bool saveCompleted, const string& fi
         file.close();
         return false;
     }
-    
     // 遍历链表
     TNode_elem* current = head->first;
     int savedCount = 0;
@@ -424,7 +420,7 @@ bool clearDataFile(const string& filename) {
         return false;
     }
     file << "# 任务数据文件 (已清空)" << endl;
-    file << "# 格式: id|title|priority|startline|deadline|finished|note" << endl;
+    file << "# 格式: id|事项标题|优先级|开始时间|截至时间|是否完成|备注" << endl;
     file.close();
     
     cout << "已清空文件: " << filename << endl;
