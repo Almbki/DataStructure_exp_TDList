@@ -1,55 +1,47 @@
 #include "Task.hpp"
-#include <utility>
 /*指针数组array存排序完的节点指针*/
 
 template <typename fanc>
-void QuickSort(Task_data *array[], int length, fanc fanc) // 快速排序并展示
+void QuickSort(Task_data array[], int length, fanc fanc) // 快速排序并展示
 {
     if (length < 2)
         return;
-
-    Task_data *first = array[0], *p = first, *la = array[length - 1];
-    while (true)
+    int left = 0, right = length - 1;
+    while (left < right)
     {
-        while (left != right && comp(*(--right), pivot))
-        {
-        }
-        if (left == right)
-            break;
-        *left = *right;
-
-        while (left != right && !comp(*(++left), pivot))
-        {
-        }
-        if (left == right)
-            break;
-        *right = *left;
+        while (left < right && fanc(array[left], array[right]))
+            left++;
+        while (left < right && !fanc(array[left], array[right]))
+            right--;
+        std::swap(array[left], array[right]);
     }
-
-    *left = pivot;
-
-    // 递归小分区，迭代大分区（防栈溢出）
-    if (left - first < last - left)
-    {
-        my_sort(first, left, comp);
-        first = left + 1;
-    }
-    else
-    {
-        my_sort(left + 1, last, comp);
-        last = left;
-    }
+    QuickSort(array, left, fanc);
+    QuickSort(array + left + 1, length - 1 - left, fanc);
 }
 void Task_Stru::SortBy_ddl()
 {
-    TNode_elem array[head->length];
-    TNode_elem *first = head->first;
-    TNode_elem *tail = head->tail;
-    while (first == tail)
+    Task_data array[head->length];
+    TNode_elem *p = head->first;
+    for (auto &i : array)
     {
+        i = p->task;
+        p = p->next;
     }
+
+    QuickSort(array, head->length, [](Task_data a, Task_data b)
+              { return a.deadline < b.deadline; });
 }
 
 void Task_Stru::SortBy_priority()
 {
+    Task_data array[head->length];
+    TNode_elem *p = head->first;
+    for (auto &i : array)
+    {
+        i = p->task;
+        p = p->next;
+    }
+
+    QuickSort(array, head->length, [](Task_data a, Task_data b)
+              { return a.priority > b.priority; });
 }

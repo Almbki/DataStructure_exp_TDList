@@ -18,14 +18,13 @@ int main() {
 
     // ===== 查找节点 =====
     std::cout << "\n查找ID=2的任务：\n";
-    TNode_elem* node = taskManager.findNode(2);
-    if (node) taskManager.PrintNode(node);
+    taskManager.printNodeById(2);
 
     // ===== 编辑节点 =====
     std::cout << "\n编辑ID=2的任务：\n";
-    if (taskManager.EditNode(node)) {
+    if (taskManager.EditNode(2)) {
         std::cout << "编辑完成后的任务：\n";
-        taskManager.PrintNode(node);
+        taskManager.printNodeById(2);
     }
 
     // ===== 删除节点 =====
