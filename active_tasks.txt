@@ -1,0 +1,6 @@
+# 任务数据文件
+# 格式: id|title|priority|startline|deadline|finished|note
+# 日期格式: YYYYMMDDHHMM (年月日时分)
+# finished: 0=未完成, 1=已完成
+
+12|test|8|202512011200|202512312359|0|fix the email to get green box

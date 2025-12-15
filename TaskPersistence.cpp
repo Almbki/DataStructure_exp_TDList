@@ -310,7 +310,7 @@ bool TaskPersistence::clearCompletedFile() {
 Task_data TaskPersistence::createTask(
     const std::string& title,
     const std::string& note,
-    int deadline,
+    long long deadline,
     int priority,
     bool finished
 ) {

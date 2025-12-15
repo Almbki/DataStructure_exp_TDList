@@ -1,99 +1,53 @@
-#include "read.h"
+// main.cpp
+#include "TaskPersistence.hpp"
+#include "Task.hpp"
 #include <iostream>
+#include <limits>
+
+using namespace std;
 
 int main() {
-    // 创建任务管理器（未完成任务）
+    std::cout << "=== 任务管理系统 - 简易测试 ===" << std::endl;
+
+    // 创建两个任务管理器：活跃任务 + 已完成任务
     Task_Stru activeTasks;
-    
-    // 创建任务管理器（已完成任务）
-    Task_Stru completedTasks; 
-    // 1. 加载数据
-    cout << "\n1. 加载未完成任务..." << endl;
-    if (loadDataFromFile(activeTasks, false, "active_tasks.txt")) {
-        cout << "加载成功!" << endl;
-    } else {
-        cout << "创建新的未完成任务文件" << endl;
-    }
-    
-    cout << "\n2. 加载已完成任务..." << endl;
-    if (loadDataFromFile(completedTasks, true, "completed_tasks.txt")) {
-        cout << "加载成功!" << endl;
-    } else {
-        cout << "创建新的已完成任务文件" << endl;
-    }
-    
-    // 2. 显示文件列表
-    cout << "\n3. 数据文件列表:" << endl;
-    listDataFiles();
-    
-    // 3. 创建新任务
-    cout << "\n4. 创建新任务..." << endl;
-    int nextId = getNextAvailableId(activeTasks, false);
-    
-    cout << "请输入任务标题: ";
-    string title;
-    getline(cin, title);
-    
-    cout << "请输入任务备注 (可选): ";
-    string note;
-    getline(cin, note);
-    
-    cout << "请输入截止时间 (YYYYMMDDHHMM, 0表示无截止时间): ";
-    string deadlineStr;
-    getline(cin, deadlineStr);
-    int deadline = 0;
-    if (deadlineStr != "0") {
-        deadline = stoi(deadlineStr);
-    }
-    
-    cout << "请输入优先级 (1-10, 默认为5): ";
-    string priorityStr;
-    getline(cin, priorityStr);
-    int priority = priorityStr.empty() ? 5 : stoi(priorityStr);
-    
-    // 创建任务
-    Task_data newTask = createTask(title, note, deadline, priority, false);
-    newTask.id = nextId;
-    
-    // 创建节点并插入链表
-    TNode_elem* newNode = new TNode_elem;
-    newNode->task = newTask;
-    newNode->next = nullptr;
-    newNode->prior = nullptr;
-    
-    activeTasks.InsertNode(newNode);
-    
-    cout << "\n新任务已创建:" << endl;
-    cout << "  ID: " << newTask.id << endl;
-    cout << "  标题: " << newTask.title << endl;
-    cout << "  创建时间: " << dateTimeToString(newTask.startline) << endl;
-    cout << "  截止时间: " << (newTask.deadline == 0 ? "无" : dateTimeToString(newTask.deadline)) << endl;
-    cout << "  备注: " << (newTask.note.empty() ? "无" : newTask.note) << endl;
-    cout << "  优先级: " << newTask.priority << endl;
-    cout << "  状态: " << (newTask.finished ? "已完成" : "未完成") << endl;
-    
-    // 4. 保存数据
-    cout << "\n5. 保存数据..." << endl;
-    if (saveDataToFile(activeTasks, false, "active_tasks.txt")) {
-        cout << "未完成任务保存成功!" << endl;
-    }
-    
-    if (saveDataToFile(completedTasks, true, "completed_tasks.txt")) {
-        cout << "已完成任务保存成功!" << endl;
-    }
-    
-    // 5. 备份数据
-    cout << "\n6. 备份数据..." << endl;
-    backupDataFiles();
-    
-    // 6. 显示所有任务
-    cout << "\n7. 当前未完成任务列表:" << endl;
+    Task_Stru completedTasks;
+
+    // 创建持久化对象（使用默认文件名）
+    TaskPersistence persistence;
+
+    // === 1. 加载现有数据（如果文件存在）===
+    std::cout << "\n[1] 正在加载任务...\n";
+    persistence.loadActiveTasks(activeTasks);
+    persistence.loadCompletedTasks(completedTasks);
+
+    // === 2. 创建一个新任务 ===
+    std::cout << "\n[2] 创建新任务...\n";
+    int newId = persistence.getNextAvailableId(activeTasks, completedTasks);
+    Task_data newTask = {12,"test","fix the email to get green box",202512011200,202512312359,8,false};
+    // Task_data newTask = TaskPersistence::createTask(
+    //     "测试任务：GitHub 贡献修复",
+    //     "确保邮箱一致，绿格子就会回来！",
+    //     202512312359,  // 截止时间：2025-12-31 23:59
+    //     8,
+    //     false
+    // );
+    //newTask.id = newId;
+    activeTasks.InsertNode(newTask);
+    std::cout << "✅ 已添加任务: " << newTask.title << std::endl;
+
+    // === 3. 保存回文件 ===
+    std::cout << "\n[3] 正在保存任务到文件...\n";
+    persistence.saveActiveTasks(activeTasks);
+    persistence.saveCompletedTasks(completedTasks);
+    std::cout << "✅ 保存成功！请检查 active_tasks.txt\n";
+
+    // === 4. 验证：打印所有活跃任务 ===
+    std::cout << "\n[4] 当前活跃任务列表：\n";
     activeTasks.PrintList();
-    
-    cout << "\n8. 当前已完成任务列表:" << endl;
-    completedTasks.PrintList();
-    
-    cout << "\n=== 测试完成 ===" << endl;
-    
+
+    std::cout << "\n=== 测试完成 ===\n";
+    std::cout << "如果配置正确，本次提交将计入 GitHub 贡献！\n";
+
     return 0;
 }
