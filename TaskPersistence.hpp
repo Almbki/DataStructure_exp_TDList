@@ -1,5 +1,5 @@
-#ifndef TASK_PERSISTENCE_HPP
-#define TASK_PERSISTENCE_HPP
+#ifndef TASK_PERSISTENCE_H
+#define TASK_PERSISTENCE_H
 
 #include "Task.hpp"  // 包含 Task_Stru 定义
 #include <string>
@@ -43,7 +43,7 @@ public:
     static Task_data createTask(
         const std::string& title,
         const std::string& note = "",
-        int deadline = 0,
+        long long deadline = 0,
         int priority = 5,
         bool finished = false
     );
@@ -72,4 +72,4 @@ private:
     static std::string dateTimeToString(int datetime);
 };
 
-#endif // TASK_PERSISTENCE_HPP
+#endif // TASK_PERSISTENCE_H

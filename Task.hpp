@@ -51,8 +51,8 @@ public:
     void SearchNode(int id);
     // template <typename fanc>
     // void QuickSort(int array[], int length, fanc fanc);
-    void SortBy_ddl();
-    void SortBy_priority();
+    //void SortBy_ddl();
+    //void SortBy_priority();
     TNode_head getHead() const { return head; }
 };
 
