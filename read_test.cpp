@@ -6,10 +6,7 @@ int main() {
     Task_Stru activeTasks;
     
     // 创建任务管理器（已完成任务）
-    Task_Stru completedTasks;
-    
-    cout << "=== 测试B组IO模块 ===" << endl;
-    
+    Task_Stru completedTasks; 
     // 1. 加载数据
     cout << "\n1. 加载未完成任务..." << endl;
     if (loadDataFromFile(activeTasks, false, "active_tasks.txt")) {
