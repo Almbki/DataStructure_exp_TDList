@@ -35,7 +35,8 @@ TNode_head Task_Stru::createList() {
     return head;
 }
 
-void Task_Stru::InsertNode(TNode_elem* newNode) {
+void Task_Stru::InsertNode(const Task_data &task) {
+    TNode_elem* newNode = new TNode_elem{task, nullptr, nullptr};
     if (!head) createList();
 
     if (head->first == nullptr) {
