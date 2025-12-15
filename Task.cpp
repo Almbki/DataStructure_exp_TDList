@@ -37,23 +37,25 @@ TNode_head Task_Stru::createList() {
 
 void Task_Stru::InsertNode(const Task_data &task) {
     TNode_elem* newNode = new TNode_elem{task, nullptr, nullptr};
-    if (!head) createList();
+    newNode->task = task;
+    newNode->next = nullptr;
+    newNode->prior = nullptr;
 
-    if (head->first == nullptr) {
+    //if (!head) createList();
+
+    if (head->first == nullptr) {   // 链表为空
         head->first = newNode;
         head->tail = newNode;
         newNode->prior = nullptr;
         newNode->next = nullptr;
-        head->length = 1;
-        return;
     }
-
-    TNode_elem* p = head->tail;
-    p->next = newNode;
-    newNode->prior = p;
-    newNode->next = nullptr;
-
-    head->tail = newNode;
+    else{
+        TNode_elem* p = head->tail; //非空链表，尾插
+        p->next = newNode;
+        newNode->prior = p;
+        newNode->next = nullptr;
+        head->tail = newNode;
+    }
     head->length++;
 }
 
@@ -144,7 +146,8 @@ TNode_elem* Task_Stru::findNode(int id) {
 }
 
 
-bool Task_Stru::EditNode(TNode_elem* p) {
+bool Task_Stru::EditNode(int id) {
+    TNode_elem* p = findNode(id);
     if (!p) return false;  
 
     bool editing = true;

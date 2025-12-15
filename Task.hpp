@@ -34,6 +34,9 @@ class Task_Stru
 private:
     TNode_head head;
 
+    TNode_elem *findNode(int id);
+    void PrintNode(const TNode_elem *elem_node) const;
+
 public:
     Task_Stru();
     ~Task_Stru();
@@ -41,10 +44,8 @@ public:
     TNode_head createList();
     void InsertNode(const Task_data &task);
     bool DeleteNode(int id);
-    TNode_elem *findNode(int id);
-    bool EditNode(TNode_elem *p);
+    bool EditNode(int id);
     void PrintList() const;
-    void PrintNode(const TNode_elem *elem_node) const;
     void SearchNode(int id);
     // template <typename fanc>
     // void QuickSort(int array[], int length, fanc fanc);
