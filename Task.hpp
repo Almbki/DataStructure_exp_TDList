@@ -31,13 +31,12 @@ using TNode_head = TList *;
 
 class Task_Stru
 {
-
 private:
     TNode_head head;
 
 public:
     Task_Stru();
-    virtual ~Task_Stru();
+    ~Task_Stru();
 
     TNode_head createList();
     void InsertNode(const Task_data &task);
@@ -46,9 +45,11 @@ public:
     bool EditNode(TNode_elem *p);
     void PrintList() const;
     void PrintNode(const TNode_elem *elem_node) const;
-    //void SearchNode(int id);
-    //void SortBy_ddl();
-    //void SortBy_priority();
+    void SearchNode(int id);
+    // template <typename fanc>
+    // void QuickSort(int array[], int length, fanc fanc);
+    void SortBy_ddl();
+    void SortBy_priority();
     TNode_head getHead() const { return head; }
 };
 
