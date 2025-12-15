@@ -2,6 +2,9 @@
 #include "TaskPersistence.hpp"
 #include "Task.hpp"
 #include <iostream>
+#include <limits>
+
+using namespace std;
 
 int main() {
     std::cout << "=== 任务管理系统 - 简易测试 ===" << std::endl;
