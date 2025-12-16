@@ -1,4 +1,5 @@
 #include "Task.hpp"
+#include "TaskIO.hpp"
 /*指针数组array存排序完的节点指针*/
 
 template <typename fan>
@@ -51,7 +52,8 @@ void Task_Stru::SortBy_ddl()
               { return a->task.deadline < b->task.deadline; });
     for (auto i : array)
     {
-        Task_Stru::PrintNode(i);
+        //Task_Stru::PrintNode(i);
+        IO::printTaskRow(i->task);
     }
 }
 
@@ -69,6 +71,7 @@ void Task_Stru::SortBy_priority()
               { return a->task.priority > b->task.priority; });
     for (auto i : array)
     {
-        Task_Stru::PrintNode(i);
+        //Task_Stru::PrintNode(i);
+        IO::printTaskRow(i->task);
     }
 }

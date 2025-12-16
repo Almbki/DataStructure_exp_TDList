@@ -210,7 +210,7 @@ bool Task_Stru::EditNode(int id) {
                 break;
         }
 
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 清理换行符
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
     }
 
     return true;
