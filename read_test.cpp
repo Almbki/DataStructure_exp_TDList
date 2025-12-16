@@ -24,8 +24,8 @@ int main() {
     // === 2. 创建一个新任务 ===
     std::cout << "\n[2] 创建新任务...\n";
     int newId = persistence.getNextAvailableId(activeTasks, completedTasks);
-    Task_data newTask = {12,"test","fix the email to get green box",202512011200,202512312359,8,false};
-    // Task_data newTask = TaskPersistence::createTask(
+    Task_data newTask = {12,"test2","fix the email to get green box",202512011200,202512312359,8,false};
+    //Task_data newTask = TaskPersistence::createTask(
     //     "测试任务：GitHub 贡献修复",
     //     "确保邮箱一致，绿格子就会回来！",
     //     202512312359,  // 截止时间：2025-12-31 23:59

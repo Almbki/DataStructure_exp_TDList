@@ -1,17 +1,22 @@
 ﻿#include <iostream>
 #include "Task.hpp"
+#include "TaskIO.hpp"
 
 int main() {
     Task_Stru taskManager;
 
     // ===== 插入节点 =====
-    Task_data t1 = {1, "买菜", "去超市买菜", 202512081000, 202512081200, 5, false};
+    Task_data t1 = {1, "一只棕色狐狸", "去超市买菜", 202512081000, 202512081200, 5, false};
     Task_data t2 = {2, "写报告", "完成实验报告", 202512081300, 202512081500, 8, false};
-    Task_data t3 = {3, "健身", "去健身房", 202512081800, 202512082000, 6, false};
+    Task_data t3 = {3, "健身tyu", "去健身房", 202512081800, 202512082000, 6, false};
+    Task_data t4 = {23, "abcdefghijklmn", "去健身房", 202512081800, 202512082000, 6, false};
+    Task_data t5 = {23, "456787", "去健身房", 202512080800, 202612082000, 6, false};
 
     taskManager.InsertNode(t1);
     taskManager.InsertNode(t2);
     taskManager.InsertNode(t3);
+    taskManager.InsertNode(t4);
+    taskManager.InsertNode(t5);
 
     std::cout << "插入后的任务列表：\n";
     taskManager.PrintList();

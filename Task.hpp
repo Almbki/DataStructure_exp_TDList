@@ -1,5 +1,4 @@
-#if !defined(TASK_H)
-#define TASK_H
+#pragma once
 #include <string>
 
 struct Task_data // 单个任务结构信息组成
@@ -36,7 +35,7 @@ private:
 
     TNode_elem *findNode(int id);
     const TNode_elem* findNode(int id) const; 
-    void PrintNode(const TNode_elem *elem_node) const;
+    //void PrintNode(const TNode_elem *elem_node) const;
 
 public:
     Task_Stru();
@@ -56,4 +55,4 @@ public:
     TNode_head getHead() const { return head; }
 };
 
-#endif // TASK_H
+

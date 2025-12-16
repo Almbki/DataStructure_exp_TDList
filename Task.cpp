@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <limits>
 #include "Task.hpp"
+#include "TaskIO.hpp"
 
 Task_Stru::Task_Stru() {
     head = new TList{0, nullptr, nullptr};
@@ -91,49 +92,28 @@ bool Task_Stru::DeleteNode(int id) {
     return false;
 }
 
-void Task_Stru::PrintNode(const TNode_elem* elem_node) const {
-    //  ID 标题 优先级 截止时间 状态
-
-    if (!elem_node) return;
-
-    std::cout << std::left << std::setw(6)  << elem_node->task.id << "\t";
-    std::cout << std::setw(25) << elem_node->task.title << "\t";
-    std::cout << std::setw(15) << elem_node->task.priority<< "\t";
-    std::cout << std::setw(15) << elem_node->task.deadline<< "\t";
-    std::cout << std::setw(10) << (elem_node->task.finished ? "已完成" : "未完成") << "\t";
-    std::cout << "\n";
-}
-
-
 void Task_Stru::PrintList() const {
     if (!head || head->first == nullptr) {
-        std::cout << "链表为空。\n";
+        IO::printEmpty();
         return;
     }
 
-    std::cout << "------------------------------------------------------------------------\n";
-    std::cout 
-        << std::left << std::setw(6)  << "ID" << "\t"
-        << std::setw(25) << "标题" << "\t"
-        << std::setw(15) << "优先级" << "\t"
-        << std::setw(15) << "截止时间" << "\t"
-        << std::setw(10) << "状态" 
-        << "\n";
-    std::cout << "------------------------------------------------------------------------\n";
-
+    IO::printTaskHeader();
     TNode_elem* p = head->first;
     while (p) {
-        PrintNode(p);
+        IO::printTaskRow(p->task);
         p = p->next;
     }
-
-    std::cout << "------------------------------------------------------------------------\n";
+    IO::printTaskFooter();
 }
 
 void Task_Stru::printNodeById(int id) const {
     const TNode_elem* p = findNode(id);
     if (p) {
-        PrintNode(p);
+        IO::printTaskRow(p->task);
+    }
+    else{
+        IO::printEmpty();
     }
 }
 
@@ -175,7 +155,7 @@ bool Task_Stru::EditNode(int id) {
     bool editing = true;
 
     while (editing) {
-        PrintNode(p);
+        IO::printTaskRow(p->task);
 
         std::cout << "请输入数字选择要修改的项：\n"
                   << "1. 标题\n"
