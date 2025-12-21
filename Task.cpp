@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <cstdlib>
 #include <limits>
 #include "Task.hpp"
 #include "TaskIO.hpp"
@@ -156,7 +157,6 @@ bool Task_Stru::EditNode(int id) {
 
     while (editing) {
         IO::printTaskRow(p->task);
-
         std::cout << "请输入数字选择要修改的项：\n"
                   << "1. 标题\n"
                   << "2. 备注\n"
@@ -211,6 +211,8 @@ bool Task_Stru::EditNode(int id) {
         }
 
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+        system("cls");
+        PrintList();
     }
 
     return true;

@@ -28,6 +28,7 @@ namespace IO_File {
         return true;
     }
     bool loadData(Task_Stru& manager, const std::string& filename) {
+        std::cout << "\n[1] 从文件加载数据...\n";
         std::ifstream file(filename);
         if (!file.is_open()) {
             std::cout << "注意: 未找到数据文件 " << filename 

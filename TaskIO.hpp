@@ -9,12 +9,14 @@ namespace IO {
     void printTaskFooter();
     //void printTask(const TNode_elem* node);
     void printEmpty();
-
-    // 额外输出函数
     void printTaskRow(const Task_data &task);
     void printSeparator();
+    void printMenu();
+    void printOptionMenu(std::string str);
 
     // 输入
     Task_data inputTask();
-    int inputTaskId();
+    //int inputTaskId();
+
+    int getChoice();
 }

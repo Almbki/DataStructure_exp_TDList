@@ -28,9 +28,9 @@ int main() {
     cin >> title;
     cout << "输入任务备注: ";
     cin >> note;
-    cout << "输入起始时间YYYYMMDD: ";
+    cout << "输入起始时间YYYYMMDDHHMM: ";
     cin >> starttime;
-    cout << "输入截止时间YYYYMMDD: ";
+    cout << "输入截止时间YYYYMMDDHHMM: ";
     cin >> deadline;
     cout << "输入优先度0-10: ";
     cin >> priority;
