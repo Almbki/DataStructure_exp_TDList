@@ -1,53 +1,58 @@
-// main.cpp
-#include "TaskPersistence.hpp"
-#include "Task.hpp"
+#include "read.h"    
+#include "Task.hpp" 
+#include "TaskIO.hpp" 
 #include <iostream>
-#include <limits>
-
 using namespace std;
 
 int main() {
-    std::cout << "=== 任务管理系统 - 简易测试 ===" << std::endl;
-
-    // 创建两个任务管理器：活跃任务 + 已完成任务
-    Task_Stru activeTasks;
-    Task_Stru completedTasks;
-
-    // 创建持久化对象（使用默认文件名）
-    TaskPersistence persistence;
-
-    // === 1. 加载现有数据（如果文件存在）===
-    std::cout << "\n[1] 正在加载任务...\n";
-    persistence.loadActiveTasks(activeTasks);
-    persistence.loadCompletedTasks(completedTasks);
-
-    // === 2. 创建一个新任务 ===
-    std::cout << "\n[2] 创建新任务...\n";
-    int newId = persistence.getNextAvailableId(activeTasks, completedTasks);
-    Task_data newTask = {12,"test2","fix the email to get green box",202512011200,202512312359,8,false};
-    //Task_data newTask = TaskPersistence::createTask(
-    //     "测试任务：GitHub 贡献修复",
-    //     "确保邮箱一致，绿格子就会回来！",
-    //     202512312359,  // 截止时间：2025-12-31 23:59
-    //     8,
-    //     false
-    // );
-    //newTask.id = newId;
-    activeTasks.InsertNode(newTask);
-    std::cout << "✅ 已添加任务: " << newTask.title << std::endl;
-
-    // === 3. 保存回文件 ===
-    std::cout << "\n[3] 正在保存任务到文件...\n";
-    persistence.saveActiveTasks(activeTasks);
-    persistence.saveCompletedTasks(completedTasks);
-    std::cout << "✅ 保存成功！请检查 active_tasks.txt\n";
-
-    // === 4. 验证：打印所有活跃任务 ===
-    std::cout << "\n[4] 当前活跃任务列表：\n";
-    activeTasks.PrintList();
-
-    std::cout << "\n=== 测试完成 ===\n";
-    std::cout << "如果配置正确，本次提交将计入 GitHub 贡献！\n";
-
+    Task_Stru taskManager;
+    std::cout << "\n[1] 从文件加载数据...\n";
+    if (IO_File::loadData(taskManager, "tasks.txt")) {
+        std::cout << "✅ 数据加载成功\n";
+    } else {
+        std::cout << "⚠️文件不存在或为空，将创建新文件\n";
+    }
+    std::cout << "\n[2] 当前任务列表：\n";
+    taskManager.PrintList();
+    std::cout << "\n[3] 添加测试任务...\n";
+    cout << "输入任务id: ";
+    int id;
+    string title;
+    string note;
+    long long starttime;
+    long long deadline;
+    int priority;
+    bool finshed;
+    cin >> id;
+    cout << "输入任务标题: ";
+    cin >> title;
+    cout << "输入任务备注: ";
+    cin >> note;
+    cout << "输入起始时间YYYYMMDD: ";
+    cin >> starttime;
+    cout << "输入截止时间YYYYMMDD: ";
+    cin >> deadline;
+    cout << "输入优先度0-10: ";
+    cin >> priority;
+    Task_data testTask = {id, title, note, starttime, deadline, priority, false}; //默认没完成是false
+    taskManager.InsertNode(testTask);
+    std::cout << "✅ 测试任务已添加\n";
+    
+    std::cout << "\n[4] 添加后的任务列表：\n";
+    taskManager.PrintList();
+    std::cout << "\n[5] 保存数据到文件...\n";
+    if (IO_File::saveData(taskManager, "tasks.txt")) {
+        std::cout << "✅ 数据保存成功！\n";
+        std::cout << "   请检查 tasks.txt 文件内容\n";
+    } else {
+        std::cout << "❌ 保存失败！\n";
+    }
+    std::cout << "\n[6] 验证：重新加载数据...\n";
+    Task_Stru newManager;
+    if (IO_File::loadData(newManager, "tasks.txt")) {
+        std::cout << "✅ 验证加载成功\n";
+        std::cout << "\n重新加载后的任务列表：\n";
+        newManager.PrintList();
+    }
     return 0;
 }
