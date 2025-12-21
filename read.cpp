@@ -1,86 +1,120 @@
 #include "read.h"
-string trim(const string& s) {
-    size_t l = s.find_first_not_of(" \t\r\n");
-    size_t r = s.find_last_not_of(" \t\r\n");
-    if (l == string::npos) return "";
-    return s.substr(l, r - l + 1);
-}
-vector<string> split(const string& s, char delim) {
-    vector<string> res;
-    string item;
-    stringstream ss(s);
-    while (getline(ss, item, delim)) {
-        res.push_back(trim(item));
+#include <sstream>
+#include <iostream>
+
+namespace IO_File {
+    std::string trim(const std::string& s) {
+        size_t start = s.find_first_not_of(" \t\r\n");
+        if (start == std::string::npos) return "";
+        size_t end = s.find_last_not_of(" \t\r\n");
+        return s.substr(start, end - start + 1);
     }
-    return res;
-}
-bool validateDateTimeFormat(const string& s) {
-    if (s.size() != 12) return false;
-    for (char c : s) if (!isdigit(c)) return false;
-    return true;
-}
-bool loadDataFromFile(Task_Stru& manager, bool /*loadCompleted*/, const string& filename) {
-    ifstream fin(filename);
-    if (!fin.is_open()) return false;
-    manager.createList(); //清空
-    string line;
-    while (getline(fin, line)) {
-        line = trim(line);
-        if (line.empty() || line[0] == '#') continue;
-        vector<string> f = split(line, DELIMITER);
-        if (f.size() < 7) continue;
-
-        Task_data t;
-        t.id        = stoi(f[0]);
-        t.title     = f[1];
-        t.priority  = stoi(f[2]);
-        t.startline = stoll(f[3]);
-        t.deadline  = stoll(f[4]);
-        t.finished  = (f[5] == "1");
-        t.note      = f[6];
-
-        manager.InsertNode(t);
+    std::vector<std::string> split(const std::string& s, char delim) {
+        std::vector<std::string> result;
+        std::string item;
+        std::istringstream stream(s);
+        
+        while (std::getline(stream, item, delim)) {
+            result.push_back(trim(item));
+        }
+        return result;
     }
-
-    fin.close();
-    return true;
-}
-bool saveDataToFile(Task_Stru& manager, bool saveCompleted, const string& filename) {
-    ofstream fout(filename);
-    if (!fout.is_open()) return false;
-
-    fout << "# id|title|priority|startline|deadline|finished|note\n";
-
-    TNode_head head = manager.getHead();
-    if (!head) return true;
-
-    for (TNode_elem* p = head->first; p; p = p->next) {
-        const Task_data& t = p->task;
-
-        if (t.finished != saveCompleted) continue;
-
-        fout << t.id << DELIMITER
-             << t.title << DELIMITER
-             << t.priority << DELIMITER
-             << t.startline << DELIMITER
-             << t.deadline << DELIMITER
-             << (t.finished ? "1" : "0") << DELIMITER
-             << t.note << "\n";
+    bool validateTaskData(const Task_data& task) {
+        // 基本校验
+        if (task.id < 0) return false;
+        if (task.title.empty()) return false;
+        if (task.priority < 1 || task.priority > 10) return false;
+        if (task.deadline < 0) return false;
+        return true;
     }
-
-    fout.close();
-    return true;
-}
-// 创建任务
-Task_data createTask(const string& title, const string& note,
-                     int deadline, int priority, bool finished) {
-    Task_data t{};
-    t.id = 0;
-    t.title = title;
-    t.note = note;
-    t.startline = stoll(getCurrentDateTime());
-    t.deadline = deadline;
-    t.priority = (priority < 1 || priority > 10) ? 5 : priority;
-    t.finished = finished;
-    return t;
-}
+    bool loadData(Task_Stru& manager, const std::string& filename) {
+        std::ifstream file(filename);
+        if (!file.is_open()) {
+            std::cout << "注意: 未找到数据文件 " << filename 
+                     << "，将创建新文件。" << std::endl;
+            return false;
+        }
+        manager.createList();
+        std::string line;
+        int lineNum = 0;
+        
+        while (std::getline(file, line)) {
+            lineNum++;
+            line = trim(line);
+            
+            // 跳过空行和注释
+            if (line.empty() || line[0] == '#') continue;
+            
+            std::vector<std::string> fields = split(line, DELIMITER);
+            
+            // 必须7个字段：id|title|note|startline|deadline|priority|finished
+            if (fields.size() != 7) {
+                std::cerr << "警告: 第" << lineNum << "行格式错误，跳过" << std::endl;
+                continue;
+            }
+            
+            try {
+                Task_data task;
+                task.id = std::stoi(fields[0]);
+                task.title = fields[1];
+                task.note = fields[2];
+                task.startline = std::stoll(fields[3]);
+                task.deadline = std::stoll(fields[4]);
+                task.priority = std::stoi(fields[5]);
+                task.finished = (fields[6] == "1" || fields[6] == "true");
+                if (!validateTaskData(task)) {
+                    std::cerr << "警告: 第" << lineNum << "行数据无效，跳过" << std::endl;
+                    continue;
+                }
+                manager.InsertNode(task);
+                
+            } catch (const std::exception& e) {
+                std::cerr << "错误: 第" << lineNum << "行解析失败: " 
+                         << e.what() << std::endl;
+                continue;
+            }
+        }
+        
+        file.close();
+        std::cout << "从 " << filename << " 加载了 " << lineNum << " 行数据" << std::endl;
+        return true;
+    }
+    
+    bool saveData(Task_Stru& manager, const std::string& filename) {
+        std::ofstream file(filename);
+        if (!file.is_open()) {
+            std::cerr << "错误: 无法打开文件 " << filename << " 进行写入" << std::endl;
+            return false;
+        }
+        file << "# 任务数据文件格式: id|title|note|startline|deadline|priority|finished\n";
+        
+        TNode_head head = manager.getHead();
+        if (!head) {
+            file.close();
+            return true;  // 空链表，文件为空
+        }
+        
+        int savedCount = 0;
+        TNode_elem* current = head->first;
+        
+        while (current) {
+            const Task_data& task = current->task;
+            
+            file << task.id << DELIMITER
+                 << task.title << DELIMITER
+                 << task.note << DELIMITER
+                 << task.startline << DELIMITER
+                 << task.deadline << DELIMITER
+                 << task.priority << DELIMITER
+                 << (task.finished ? "1" : "0") << "\n";
+            
+            savedCount++;
+            current = current->next;
+        }
+        
+        file.close();
+        std::cout << "向 " << filename << " 保存了 " << savedCount << " 个任务" << std::endl;
+        return true;
+    }
+    
+} // namespace IO_File
