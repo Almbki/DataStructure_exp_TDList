@@ -159,8 +159,8 @@ namespace IO{
 
         std::
         cout << "输入截止时间 格式: YYYYMMDDHHMM: ";
-        while (!safeInput(task.deadline)) {
-            std::cout << "❌ 截止时间必须是整数，请重新输入: ";
+        while (!safeInput(task.deadline) || !(task.deadline>task.startline)) {
+            std::cout << "❌ 截止时间必须是整数，且大于起始时间，请重新输入: ";
         }
 
         std::cout << "输入优先度 (1-10): ";
