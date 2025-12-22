@@ -109,6 +109,7 @@ int main(){
             break;
 
         default:
+            IO_File::saveData(taskManager, filename);
             break;
         }
     }
