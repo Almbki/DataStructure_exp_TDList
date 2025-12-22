@@ -100,13 +100,44 @@ int main(){
         }
 
             
-        case 5:
-            //庄sir 靠你了
-            break;
-        case 6:
-            IO_File::saveData(taskManager, filename);
-            Sleep(1500);
-            break;
+        case 5:{
+            int sortChoice = 1;
+            while(sortChoice){
+            system("cls");
+            taskManager.PrintList();
+            IO::printSortMenu();
+            std::cout << "请选择模式: ";
+            std::cin >> sortChoice;
+            switch (sortChoice)
+            {
+            case 0:
+                break;
+            case 1:
+                system("cls");
+                taskManager.PrintList();
+                system("pasue");
+                break;
+            
+            case 2:
+                system("cls");
+                taskManager.SortBy_ddl();
+                system("pause");
+                break;
+            case 3:
+                system("cls");
+                taskManager.SortBy_priority();
+                system("pause");
+                break;
+            default:
+                std::cout << "非法输入";
+                break;
+            }
+        }
+        }
+        // case 6:
+        //     IO_File::saveData(taskManager, filename);
+        //     Sleep(1500);
+        //     break;
 
         default:
             IO_File::saveData(taskManager, filename);

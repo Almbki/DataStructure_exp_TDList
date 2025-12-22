@@ -13,6 +13,7 @@ namespace IO {
     void printSeparator();
     void printMenu();
     void printOptionMenu(std::string str);
+    void printSortMenu();
 
     // 输入
     Task_data inputTask();

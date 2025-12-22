@@ -40,6 +40,7 @@ void QuickSort(TNode_elem *array[], int length, fun func) // 快速排序并展�
 }
 void Task_Stru::SortBy_ddl()
 {
+    IO::printTaskHeader();
     TNode_elem *array[head->length];
     TNode_elem *p = head->first;
     for (auto &i : array)
@@ -55,10 +56,12 @@ void Task_Stru::SortBy_ddl()
         // Task_Stru::PrintNode(i);
         IO::printTaskRow(i->task);
     }
+    IO::printTaskFooter();
 }
 
 void Task_Stru::SortBy_priority()
 {
+    IO::printTaskHeader();
     TNode_elem *array[head->length];
     TNode_elem *p = head->first;
     for (auto &i : array)
@@ -74,4 +77,5 @@ void Task_Stru::SortBy_priority()
         // Task_Stru::PrintNode(i);
         IO::printTaskRow(i->task);
     }
+    IO::printTaskFooter();
 }

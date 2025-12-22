@@ -100,8 +100,8 @@ namespace IO{
     std::cout << "[3] 修改任务\n";
     std::cout << "[4] 删除任务\n";
     std::cout << "[5] 切换排序模式\n";
-    std::cout << "[6] 保存数据到文件\n";
-    std:: cout << "[0] 退出程序\n";
+    // std::cout << "[6] 保存数据到文件\n";
+    std:: cout << "[0] 保存并退出程序\n";
     std::cout << "----------------------------------------\n";
     std::cout << "请选择操作 (0-6): ";
 }
@@ -110,6 +110,13 @@ namespace IO{
         std::cout << "\n";
         std:: cout << "[0] 返回\n";
         std::cout << "[1] 继续" << str <<"\n";                
+    }
+
+    void printSortMenu(){
+        std::cout << "[1] 默认模式\n";
+        std::cout << "[2] ddl模式\n";
+        std::cout << "[3] 优先度模式\n";
+        std::cout << "[0] 返回\n";
     }
 
     int getChoice() {
